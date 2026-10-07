@@ -733,12 +733,31 @@ svg.leaflet-image-layer.leaflet-interactive path {
 
 <div class="layout">
   <div id="side"></div>
+  <!-- 緊急卡片置頂留位（JS會，不可見時隱藏） -->
+  <div id="emgCard" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.6);z-index:9999;overflow-y:auto;">
+    <div style="background:#fff;max-width:560px;margin:48px auto;border-radius:18px;padding:28px 26px;font-size:19px;line-height:1.9;box-shadow:0 8px 40px rgba(0,0,0,.3);">
+      <h2 style="margin:0 0 12px;font-size:30px;color:#b91c1c;">🚨 緊急資料卡</h2>
+      <p style="margin:4px 0;"><b style="font-size:26px;color:#b91c1c;">📍 緊急電話：112</b>（歐盟通用，警察／救護／消防／免費）</p>
+      <p style="margin:4px 0;">🏠 <b>行程途經國家</b>：法國 → 匈牙利 → 奧地利 → 捷克</p>
+      <p style="margin:4px 0;">✈️ <b>回程航班</b>：EK140 布拉格→香港，Nov 16 14:45</p>
+      <p style="margin:4px 0;">🧳 <b>主要住宿</b>：
+        <br>里昂 Premiere Classe (Oct 9-11) · Le Puy La Prévote (Oct 11-13)
+        <br>Cahors (Oct 29-31) · Toulouse (Oct 31) · Budapest (Nov 2-3)
+        <br>Vienna (Nov 5-7) · Salzburg (Nov 9) · Krumlov (Nov 10) · Prague (Nov 11-16)
+      </p>
+      <p style="margin:4px 0;">📶 <b>eSIM</b>：第一張到 約11月6-7日；第二張「歐洲二」請於維也納酒店WiFi裝</p>
+      <p style="margin:4px 0;">🧳 <b>行山日子</b>：Oct 13-29（Le Puy→Cahors），14日，每日13-26km</p>
+      <hr style="border:0;border-top:1px solid #e5e7eb;margin:16px 0;">
+      <button id="emgClose" style="background:#b91c1c;color:#fff;border:0;border-radius:12px;padding:12px 28px;font-size:20px;cursor:pointer;width:100%;">關閉</button>
+    </div>
+  </div>
   <div id="mapwrap" style="position:relative;flex:1;min-width:0;display:flex;flex-direction:column;">
     <div class="toolbar">
       <span class="chip walk on" data-k="walk">🥾 行山</span>
       <span class="chip trans on" data-k="trans">🚌 交通</span>
       <span class="chip fly on" data-k="fly">✈ 航班</span>
       <span class="chip" id="fitAll" style="background:#1a56db;color:#fff;border-color:transparent;">🔍 全程</span>
+      <span class="chip" id="emgOpen" style="background:#b91c1c;color:#fff;border-color:transparent;">🚨 緊急資料</span>
     </div>
     <div id="map"></div>
   </div>
@@ -903,6 +922,10 @@ document.getElementById('fitAll').onclick = () => {
   Object.values(polylines).forEach(pl => { if (pl.getBounds) b.extend(pl.getBounds()); });
   map.flyToBounds(b, {padding:[40, 40], duration:.8});
 };
+
+document.getElementById('emgOpen').onclick = () => { document.getElementById('emgCard').style.display = 'block'; };
+document.getElementById('emgClose').onclick = () => { document.getElementById('emgCard').style.display = 'none'; };
+document.getElementById('emgCard').onclick = (e) => { if (e.target.id === 'emgCard') e.target.style.display = 'none'; };
 
 // 初始視野：歐洲行程（唔計香港航線）
 (function () {
