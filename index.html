@@ -703,11 +703,19 @@ svg.leaflet-image-layer.leaflet-interactive path {
   .km { color:#057a55; font-weight:700; }
   footer { padding:10px 16px; font-size:13px; color:#6b7280; background:#fff; border-top:1px solid #e5e7eb; }
   @media (max-width:860px) {
-    .layout { flex-direction:column; height:auto; }
-    #side { width:100%; flex:none; max-height:46vh; border-right:0; border-top:1px solid #e5e7eb; }
-    #map { height:54vh; }
-    .toolbar { left:12px; }
-    header h1 { font-size:24px; }
+    header { padding:10px 14px; }
+    header h1 { font-size:20px; }
+    header p { margin-top:4px; font-size:14px; }
+    .stats { margin-top:8px; gap:6px; }
+    .stat { padding:4px 10px; font-size:13.5px; }
+    html, body { height:100dvh; }
+    .layout { flex-direction:column; height:calc(100dvh - 128px); min-height:0; }
+    #mapwrap { order:-1; width:100%; flex:1 1 62% !important; min-height:0; display:flex; flex-direction:column; }
+    #map { width:100% !important; flex:1 1 auto; min-height:0; }
+    #side { width:100%; flex:0 1 38%; min-height:90px; max-height:38%; border-right:0; border-top:1px solid #e5e7eb; }
+    .toolbar { left:12px; top:8px; }
+    .chip { padding:5px 11px; font-size:14px; }
+    footer { display:none; }
   }
 </style>
 </head>
@@ -725,7 +733,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 
 <div class="layout">
   <div id="side"></div>
-  <div style="position:relative;flex:1;min-width:0;display:flex;flex-direction:column;">
+  <div id="mapwrap" style="position:relative;flex:1;min-width:0;display:flex;flex-direction:column;">
     <div class="toolbar">
       <span class="chip walk on" data-k="walk">🥾 行山</span>
       <span class="chip trans on" data-k="trans">🚌 交通</span>
